@@ -175,4 +175,18 @@ class Address
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        $result = $this->fullName . "[br]";
+        if ($this->getCampany()) {
+            $result .= $this->campany . "[br]";
+        }
+        $result .= $this->address . "[br]";
+        $result .= $this->complement . "[br]";
+        $result .= $this->codePostale . " - " . $this->city . "[br]";
+        $result .= $this->country . "[br]";
+
+        return $result;
+    }
 }

@@ -24,10 +24,8 @@
 								</tr>
 							</thead>
 							<tbody>
-								{% set subTotal = 0 %}
-								{% for element in cart %}
+								{% for element in cart.products %}
 									<tr>
-										{% set subTotal = subTotal + (element.quantity * element.product.price/100) %}
 										<td class="product-thumbnail">
 											<a href="#"><img src="/assets/uploads/products/{{element.product.image}}" alt="{{element.product.name}}"></a>
 										</td>
@@ -90,22 +88,22 @@
 								<tbody>
 									<tr>
 										<td class="cart_total_label">Cart Subtotal HT</td>
-										<td class="cart_total_amount">€{{subTotal}}</td>
+										<td class="cart_total_amount">€{{ cart.data.subTotalHT }}</td>
 									</tr>
 									<tr>
 										<td class="cart_total_label">Taxes (20%)</td>
-										<td class="cart_total_amount">€{{subTotal * 0.2}}</td>
+										<td class="cart_total_amount">€{{ cart.data.taxe }}</td>
 									</tr>
 									<tr>
 										<td class="cart_total_label">Total TTC</td>
 										<td class="cart_total_amount">
-											<strong>€{{subTotal * 1.2}}</strong>
+											<strong>€{{ cart.data.subTotalTTC }}</strong>
 										</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
-						<a href="#" class="btn btn-fill-out">Proceed To CheckOut</a>
+						<a href="{{ path('checkout') }}" class="btn btn-fill-out">Proceed To CheckOut</a>
 					</div>
 				</div>
 			</div>

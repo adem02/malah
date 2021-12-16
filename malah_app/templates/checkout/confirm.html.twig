@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Checkout
+{% endblock %}
+
+{% block body %}
+
+	{{ include("partials/title_section.html.twig", {'name':'Checkout Confirm'}) }}
+
+	<div class="section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="heading_s1">
+						<h4>Please, verify your delivery Address</h4>
+						<div class="content" id="carrier">
+							{{ address | replace({'[br]' : '<br>'}) | raw }}
+							<a href="{{ path('address_edit', {'id': address.id}) }}" class="btn btn-fill-out mt-1">Edit Address</a>
+							<a href="{{ path('checkout_edit') }}" class="btn btn-fill-out mt-1">Change Address</a>
+						</div>
+					</div>
+					<div class="heading_s1">
+						<h4>Please, verify your carrier</h4>
+						<div class="content" id="carrier">
+							{{ carrier | replace({'[br]' : '<br>'}) | raw }}
+							<a href="{{ path('checkout_edit') }}" class="btn btn-fill-out mt-1">Change Carrier</a>
+						</div>
+					</div>
+					{# {% if informations %} #}
+					<div class="heading_s1">
+						<h4>Please, verify your Additional information</h4>
+						<div class="form-group mb-0" id="informations">
+							{{ informations | replace({'[br]' : '<br>'}) | raw }}
+							Merci
+						</div>
+					</div>
+					{# {% endif %} #}
+				</div>
+
+				<div class="col-md-6">
+					<div class="order_review">
+						<div class="heading_s1">
+							<h4>Your Orders</h4>
+						</div>
+						<div class="table-responsive order_table">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Product</th>
+										<th>Total</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for element in cart.products %}
+										<tr>
+											<td>
+												{{element.product.name}}
+												<span class="product-qty">x
+													{{element.quantity}}</span>
+											</td>
+											<td>€
+												{{ element.product.price / 100 }}</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+								<tfoot>
+									<tr>
+										<th>Total HT</th>
+										<td class="product-subtotal">€
+											{{cart.data.subTotalHT}}</td>
+									</tr>
+									<tr>
+										<th>Taxe</th>
+										<td class="product-subtotal">€
+											{{ cart.data.taxe }}</td>
+									</tr>
+									<tr>
+										<th>Shipping (
+											{{ carrier.name }}
+											)</th>
+										<td class="product-subtotal">€
+											{{ carrier.price / 100 }}</td>
+									</tr>
+									<tr>
+										<th>Total TTC</th>
+										<td class="product-subtotal">€
+											{{ cart.data.subTotalTTC + (carrier.price / 100) }}</td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+						<div class="payment_method">
+							<div class="heading_s1">
+								<h4>Payment</h4>
+							</div>
+							<button type="submit" id="checkout-button" class="btn btn-fill-out btn-block">
+								Paid | €
+								{{ cart.data.subTotalTTC + (carrier.price / 100) }}
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

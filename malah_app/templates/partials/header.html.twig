@@ -133,19 +133,17 @@
 						<a class="nav-link cart_trigger" href="#" data-toggle="dropdown">
 							<i class="linearicons-cart"></i>
 							<span class="cart_count">
-								{% set quantity = 0 %}
-								{% for element in app.session.get('cartData') %}
-									{% set quantity = quantity + element.quantity %}
-								{% endfor %}
-								{{ quantity }}
+								{% if app.session.get('cart') %}
+									{{ app.session.get('cartData').data.cart_quantity }}
+								{% else %}
+									0
+								{% endif %}
 							</span>
 						</a>
 						<div class="cart_box dropdown-menu dropdown-menu-right">
 							<ul class="cart_list">
-								{% if app.session.get('cartData') %}
-									{% set subTotal = 0 %}
-									{% for element in app.session.get('cartData') %}
-										{% set subTotal = subTotal + (element.quantity * element.product.price/100) %}
+								{% if app.session.get('cart') %}
+									{% for element in app.session.get('cartData').products %}
 										<li>
 											<a href="#" class="item_remove">
 												<i class="ion-close"></i>
@@ -160,29 +158,26 @@
 												{{element.product.price/100}}</span>
 										</li>
 									{% endfor %}
-								{% else %}
-									<li>Your Cart is empty</li>
-								{% endif %}
-
-							</ul>
-							{% if app.session.get('cartData') %}
+								</ul>
 								<div class="cart_footer">
 									<p class="cart_total">
-										<strong>Subtotal HT:</strong>
+										<strong>Subtotal TTC:</strong>
 										<span class="cart_price">
 											<span class="price_symbole">€</span>
 										</span>
-										{{subTotal}}</p>
+										{{ app.session.get('cartData').data.subTotalTTC }}</p>
 									<p class="cart_buttons">
-										<a href="#" class="btn btn-fill-line rounded-0 view-cart">View Cart</a>
-										<a href="#" class="btn btn-fill-out rounded-0 checkout">Checkout</a>
+										<a href="{{ path('cart') }}" class="btn btn-fill-line rounded-0 view-cart">View Cart</a>
+										<a href="{{ path('checkout') }}" class="btn btn-fill-out rounded-0 checkout">Checkout</a>
 									</p>
 								</div>
-							{% endif %}
-						</div>
+							{% else %}
+								<li>Your Cart is empty</li>
+							</ul>
+						{% endif %}
 					</li>
 				</ul>
-			</nav>
-		</div>
-	</div>
-</header>
+			</div>
+		</li>
+	</ul>
+</nav></div></div></header>

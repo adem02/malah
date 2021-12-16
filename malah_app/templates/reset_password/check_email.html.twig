@@ -4,9 +4,7 @@
 {% endblock %}
 
 {% block body %}
-
 	{{ include("partials/title_section.html.twig", {'name':'Password Reset Email Sent'}) }}
-
 
 	<div class="login_register_wrap section">
 		<div class="container">
@@ -20,7 +18,7 @@
 							<div class="content">
 								<p>
 									If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.
-											        This link will expire in
+																				        This link will expire in
 									{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
 								</p>
 								<p>If you don't receive an email please check your spam folder or
@@ -36,6 +34,4 @@
 			</div>
 		</div>
 	</div>
-
-
 {% endblock %}
